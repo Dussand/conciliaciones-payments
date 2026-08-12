@@ -91,10 +91,10 @@ def procesar_bbva_otros(archivo, payouts_metabase_df=None, **kwargs):
         )
     else:
         valores_metabase = []
+        operacion_texto = bancos_bbva["Operación - Número"].apply(lambda x: "" if pd.isna(x) else str(x))
 
     df_bbva = bancos_bbva[
-        bancos_bbva["Operación - Número"]
-        .astype(str)
+        operacion_texto
         .apply(lambda x: any(valor in x for valor in valores_metabase))
     ].copy()
     df_bbva["Operación - Número"] = df_bbva["Operación - Número"].astype(int).astype(str)
